@@ -1,6 +1,15 @@
+import { EventHandler } from './event-handler'
 import { EventBus } from './event.bus'
 import { Event } from './event.marker'
 import { SimpleEventBus } from './simple-event.bus'
+
+class TestEventHandler implements EventHandler<TestEvent> {
+  public async execute(event: TestEvent): Promise<void> {}
+}
+
+class AnotherTestEventHandler implements EventHandler<TestEvent> {
+  public async execute(event: TestEvent): Promise<void> {}
+}
 
 class TestEvent implements Event {
   constructor(public readonly someData: any) {}
@@ -47,5 +56,37 @@ describe('SimpleEventBus', () => {
     eventBus.publish(new TestEvent({ called: 'afterSubscription' }))
 
     expect(lastEvent).toHaveProperty('someData.called', 'beforeSubscription')
+  })
+
+  it('registered event handler should react when event gets published', () => {
+    const eventBus: EventBus = new SimpleEventBus()
+    const handlerInstance = new TestEventHandler()
+    let executed = false
+
+    handlerInstance.execute = async (event: TestEvent) => {
+      executed = true
+    }
+    eventBus.register({ event: TestEvent, handlers: [handlerInstance] })
+    eventBus.publish(new TestEvent({ greeting: 'Howdy!' }))
+
+    expect(executed).toStrictEqual(true)
+  })
+
+  it('event should be able to notify multiple handlers when gets published', () => {
+    const eventBus: EventBus = new SimpleEventBus()
+    const firstHandlerInstance = new TestEventHandler()
+    const secondHandlerInstance = new AnotherTestEventHandler()
+    const executedHandlers = []
+
+    firstHandlerInstance.execute = async (event: TestEvent) => {
+      executedHandlers.push('first')
+    }
+    secondHandlerInstance.execute = async (event: TestEvent) => {
+      executedHandlers.push('second')
+    }
+    eventBus.register({ event: TestEvent, handlers: [firstHandlerInstance, secondHandlerInstance] })
+    eventBus.publish(new TestEvent({ greeting: 'Howdy!' }))
+
+    expect(executedHandlers).toEqual(['first', 'second'])
   })
 })
