@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "start": "ts-node -r tsconfig-paths/register core/main.ts"
+    "start": "ts-node -r tsconfig-paths/register core/main.ts",
+    "test": "jest",
+    "test:order": "jest --runInBand"
   },
   "repository": {
     "type": "git",
