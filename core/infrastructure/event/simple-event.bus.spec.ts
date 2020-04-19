@@ -66,7 +66,7 @@ describe('SimpleEventBus', () => {
     handlerInstance.execute = async (event: TestEvent) => {
       executed = true
     }
-    eventBus.register({ event: TestEvent, handlers: [handlerInstance] })
+    eventBus.registerAll({ event: TestEvent, handlers: [handlerInstance] })
     eventBus.publish(new TestEvent({ greeting: 'Howdy!' }))
 
     expect(executed).toStrictEqual(true)
@@ -84,7 +84,7 @@ describe('SimpleEventBus', () => {
     secondHandlerInstance.execute = async (event: TestEvent) => {
       executedHandlers.push('second')
     }
-    eventBus.register({ event: TestEvent, handlers: [firstHandlerInstance, secondHandlerInstance] })
+    eventBus.registerAll({ event: TestEvent, handlers: [firstHandlerInstance, secondHandlerInstance] })
     eventBus.publish(new TestEvent({ greeting: 'Howdy!' }))
 
     expect(executedHandlers).toEqual(['first', 'second'])

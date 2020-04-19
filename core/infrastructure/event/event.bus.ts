@@ -7,5 +7,4 @@ export interface EventBus {
   subscribe(notifyCallback: NotifyCallback): Subscription
   unsubscribe(subscription: Subscription): void
   registerAll(...event: EventWithHandlers[]): void
-  register(event: EventWithHandlers): void
 }

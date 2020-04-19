@@ -48,7 +48,7 @@ export class SimpleEventBus implements EventBus {
     events.forEach((event) => this.register(event))
   }
 
-  public register(event: EventWithHandlers): void {
+  private register(event: EventWithHandlers): void {
     this.registeredEvents.push(event)
   }
 }
