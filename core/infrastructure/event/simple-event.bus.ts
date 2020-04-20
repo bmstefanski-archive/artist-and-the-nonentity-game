@@ -13,11 +13,9 @@ export class SimpleEventBus implements EventBus {
     if (this.isEventUndefinedOrNull(event)) {
       return
     }
-    this.executeBondedHandlers(event)
 
-    this.subscriptions.forEach((subscription: Subscription) => {
-      subscription.notifyCallback(event)
-    })
+    this.executeBondedHandlers(event)
+    this.subscriptions.forEach((subscription: Subscription) => subscription.notifyCallback(event))
   }
 
   private isEventUndefinedOrNull(event: Event): boolean {

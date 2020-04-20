@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/bmstefanski/artist-and-the-nonentity-game#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "tsconfig-paths": "^3.9.0"
   },
