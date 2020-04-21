@@ -89,4 +89,15 @@ describe('SimpleEventBus', () => {
 
     expect(executedHandlers).toEqual(['first', 'second'])
   })
+
+  it('event bus should be able to register only event, without handlers', () => {
+    const eventBus = new SimpleEventBus()
+    let lastEvent
+
+    eventBus.registerAll({ event: TestEvent })
+    eventBus.subscribe((event) => (lastEvent = event))
+    eventBus.publish(new TestEvent({ greetings: 'Howdy!' }))
+
+    expect(lastEvent).toBeInstanceOf(TestEvent)
+  })
 })

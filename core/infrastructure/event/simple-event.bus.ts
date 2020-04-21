@@ -24,12 +24,19 @@ export class SimpleEventBus implements EventBus {
 
   private executeBondedHandlers(event: Event): void {
     const registeredEvent = this.findEventOrReturnEmpty(event.constructor.name)
-    registeredEvent.handlers.forEach((handler: EventHandler<typeof event>) => handler.execute(event))
+
+    if (this.hasHandlers(registeredEvent)) {
+      registeredEvent.handlers.forEach((handler: EventHandler<typeof event>) => handler.execute(event))
+    }
   }
 
   private findEventOrReturnEmpty(eventName: string): EventWithHandlers {
     const emptyEvent: EventWithHandlers = { event: null, handlers: [] }
     return this.registeredEvents.find((item: any) => item.event.name === eventName) || emptyEvent
+  }
+
+  private hasHandlers(event: EventWithHandlers): boolean {
+    return event.handlers && event.handlers.length > 0
   }
 
   public subscribe(notifyCallback: NotifyCallback): Subscription {
