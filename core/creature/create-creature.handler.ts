@@ -3,13 +3,20 @@ import { EventBus } from 'infrastructure/event/event.bus'
 import { DataStorage } from 'infrastructure/storage/data-storage'
 import { CreateCreatureCommand } from './create-creature.command'
 import { CreatureCreatedEvent } from './creature-created.event'
+import { CreateCreatureDto } from './dto/create-creature.dto'
 import { CreatureDto } from './dto/creature.dto'
 
 export class CreateCreatureHandler implements CommandHandler<CreateCreatureCommand> {
   constructor(private readonly storage: DataStorage, private readonly eventBus: EventBus) {}
 
   public async execute(command: CreateCreatureCommand): Promise<void> {
-    const storedCreature = this.storage.save(command.dto) as CreatureDto
-    this.eventBus.publish(new CreatureCreatedEvent(storedCreature))
+    if (this.isDtoValid(command.dto)) {
+      const storedCreature = this.storage.save(command.dto) as CreatureDto
+      this.eventBus.publish(new CreatureCreatedEvent(storedCreature))
+    }
+  }
+
+  private isDtoValid(dto: CreateCreatureDto): boolean {
+    return !!dto.id && !!dto.name
   }
 }

@@ -11,7 +11,7 @@ describe('CreateCreatureEvent', () => {
     const eventBus = new SimpleEventBus()
     const commandBus = new CommandBus()
     const storage: DataStorage = { save: jest.fn(() => {}), findOne: undefined, delete: undefined }
-    const createCreatureDto: CreateCreatureDto = { id: 1, name: '', skills: null }
+    const createCreatureDto: CreateCreatureDto = { id: 1, name: 'Test name', skills: null }
     let lastPublishedEvent
 
     eventBus.registerAll({ event: CreatureCreatedEvent })
@@ -21,5 +21,19 @@ describe('CreateCreatureEvent', () => {
 
     expect(storage.save).toBeCalled()
     expect(lastPublishedEvent).toBeInstanceOf(CreatureCreatedEvent)
+  })
+
+  it('should publish event only if payload passes validation', () => {
+    const eventBus = new SimpleEventBus()
+    const commandBus = new CommandBus()
+    const createCreatureDto: CreateCreatureDto = { id: 1, name: '', skills: null }
+    let lastPublishedEvent
+
+    eventBus.registerAll({ event: CreatureCreatedEvent })
+    eventBus.subscribe((event: any) => (lastPublishedEvent = event))
+    commandBus.registerAll({ command: CreateCreatureCommand, handler: new CreateCreatureHandler(null, eventBus) })
+    commandBus.execute(new CreateCreatureCommand(createCreatureDto))
+
+    expect(lastPublishedEvent).toBeUndefined()
   })
 })
