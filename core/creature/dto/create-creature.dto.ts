@@ -1,7 +1,7 @@
-import { SkillDto } from 'skill/dto/skill.dto'
+import { SkillType } from 'skill/skill.type'
 
 export interface CreateCreatureDto {
   id: number
   name: string
-  skills: SkillDto[]
+  skill: SkillType
 }

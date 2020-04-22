@@ -1,4 +1,4 @@
-import { SkillDto } from 'skill/dto/skill.dto'
+import { SkillType } from 'skill/skill.type'
 
 export class Creature {
   public readonly id: number
@@ -6,5 +6,5 @@ export class Creature {
   public readonly health: number = 1
   public readonly strength: number = 1
   public readonly lives: number = 1
-  public readonly skills: SkillDto[]
+  public readonly skill: SkillType
 }
