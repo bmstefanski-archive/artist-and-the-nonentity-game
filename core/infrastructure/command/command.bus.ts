@@ -28,7 +28,7 @@ export class CommandBus {
     }
   }
 
-  public registerAll<T extends Command>(...commands: CommandWithHandler<T>[]): void {
+  public registerAll(...commands: CommandWithHandler<any>[]): void {
     this.registeredCommands.push(...commands)
   }
 }
