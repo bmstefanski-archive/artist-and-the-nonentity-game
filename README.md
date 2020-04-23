@@ -19,7 +19,7 @@ There is a possibility that GOAT might take a hit, but then damage amount double
 - 🤡 Ja Rule - special skill - **Shooting** 
 
 ### Purpose
-It is an illogical game with a ridiculous plot. Created only to test Event-Driven Architecture with TDD in the context of the user interface agnostic platform (everything can act as an interface without violating architecture). 
+It is an illogical game with a ridiculous plot. Created only to test Event-Driven Architecture in the context of the user interface agnostic platform (everything can act as an interface without violating architecture). 
 
 The main goal of the project is to retain its independence between the lowest level of project - **game core** and highest - **user interface** in the macro perspective.       
 Similarly, in the micro perspective, for instance, game use cases shouldn't depend on the storage layer (database, etc.), instead it should be loosely-coupled by polymorphic interface.               
