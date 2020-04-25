@@ -13,20 +13,20 @@ export class ThrowRhymeSkillCreator extends SkillCreator {
 
   protected async executeSkill(from: CreatureDto, to: CreatureDto): Promise<void> {
     if (this.isAlive(from) && this.isAlive(to)) {
-      const subscription = this.multiplyPowerPointsWhenGetsCriticalHit(from.health, to)
+      const subscription = this.multiplyPowerPointsWhenGetsCriticalHit(from, to)
       setTimeout(() => this.eventBus.unsubscribe(subscription), ThrowRhymeSkillCreator.SKILL_DURATION_SEC)
     }
   }
 
   private isAlive(creature: Creature): boolean {
-    return creature.health > 0 || creature.lives > 0
+    return creature && (creature.health > 0 || creature.lives > 0)
   }
 
-  private multiplyPowerPointsWhenGetsCriticalHit(health: number, attacker: CreatureDto): Subscription {
+  private multiplyPowerPointsWhenGetsCriticalHit(victim: CreatureDto, attacker: CreatureDto): Subscription {
     const subscription = this.eventBus.subscribe((event: Event) => {
-      if (event instanceof CreatureUpdatedEvent) {
+      if (event instanceof CreatureUpdatedEvent && event.id === victim.id) {
         const currentHealth = event.updatedProperties.health
-        const damageValue = this.getDamageValue(health, currentHealth)
+        const damageValue = this.getDamageValue(victim.health, currentHealth)
 
         if (this.isAttackCritical(currentHealth, damageValue)) {
           const payload = { health: attacker.health - this.multiplyBy(damageValue, 2) }

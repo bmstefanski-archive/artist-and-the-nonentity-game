@@ -1,5 +1,5 @@
-import { Creature } from 'creature/creature.model'
+import { CreatureDto } from 'creature/dto/creature.dto'
 
 export interface SkillExecuter {
-  execute(from: Creature, to: Creature): Promise<void>
+  execute(from: CreatureDto, to: CreatureDto): Promise<void>
 }

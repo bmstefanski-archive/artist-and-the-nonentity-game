@@ -15,7 +15,7 @@ export class SimpleEventBus implements EventBus {
     }
 
     this.executeBondedHandlers(event)
-    this.subscriptions.forEach((subscription: Subscription) => subscription.notifyCallback(event))
+    this.notifySubscribers(event)
   }
 
   private isEventUndefinedOrNull(event: Event): boolean {
@@ -37,6 +37,10 @@ export class SimpleEventBus implements EventBus {
 
   private hasHandlers(event: EventWithHandlers): boolean {
     return event.handlers && event.handlers.length > 0
+  }
+
+  private notifySubscribers(event: Event): void {
+    this.subscriptions.forEach((subscription: Subscription) => subscription.notifyCallback(event))
   }
 
   public subscribe(notifyCallback: NotifyCallback): Subscription {
