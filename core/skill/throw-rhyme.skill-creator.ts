@@ -8,13 +8,13 @@ import { floor } from 'lodash'
 import { SkillCreator } from './skill-creator'
 
 export class ThrowRhymeSkillCreator extends SkillCreator {
-  private static readonly SKILL_DURATION_MS = 1000 * 10
+  private static readonly SKILL_DURATION_SEC = 1000 * 10
   private static readonly CRITICAL_HIT_PERCENT = 20
 
   protected async executeSkill(from: CreatureDto, to: CreatureDto): Promise<void> {
     if (this.isAlive(from) && this.isAlive(to)) {
       const subscription = this.multiplyPowerPointsWhenGetsCriticalHit(from.health, to)
-      setTimeout(() => this.eventBus.unsubscribe(subscription), ThrowRhymeSkillCreator.SKILL_DURATION_MS)
+      setTimeout(() => this.eventBus.unsubscribe(subscription), ThrowRhymeSkillCreator.SKILL_DURATION_SEC)
     }
   }
 
