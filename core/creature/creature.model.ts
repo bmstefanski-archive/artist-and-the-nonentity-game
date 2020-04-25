@@ -3,8 +3,8 @@ import { SkillType } from 'skill/skill.type'
 export class Creature {
   public readonly id: number
   public readonly name: string
-  public readonly health: number = 1
-  public readonly strength: number = 1
-  public readonly lives: number = 1
+  public readonly health: number
+  public readonly strength: number
+  public readonly lives: number
   public readonly skill: SkillType
 }

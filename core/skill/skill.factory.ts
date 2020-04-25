@@ -1,3 +1,4 @@
+import { CommandBus } from 'infrastructure/command/command.bus'
 import { EventBus } from 'infrastructure/event/event.bus'
 import { SkillCreator } from './skill-creator'
 import { SkillNotFoundError } from './skill-not-found.error'
@@ -8,8 +9,8 @@ import { ThrowRhymeSkillCreator } from './throw-rhyme.skill-creator'
 export class SkillFactory {
   private readonly standardSkills: { [skillName: string]: SkillCreator }
 
-  constructor(private readonly eventBus: EventBus) {
-    this.standardSkills = { [SkillType.THROWING_RHYME]: new ThrowRhymeSkillCreator(this.eventBus) }
+  constructor(private readonly eventBus: EventBus, private readonly commandBus: CommandBus) {
+    this.standardSkills = { [SkillType.THROWING_RHYME]: new ThrowRhymeSkillCreator(this.eventBus, this.commandBus) }
   }
 
   public makeSkill(skillName: string): SkillExecuter {
