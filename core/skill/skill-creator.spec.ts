@@ -7,28 +7,31 @@ class TestSkillCreatorImpl extends SkillCreator {
   protected async executeSkill(from: any, to: any): Promise<void> {}
 }
 
+// tslint:disable no-string-literal
 describe('SkillCreator', () => {
-  it('should create an instance of skill executer', () => {
-    const eventBus = mock<EventBus>()
-    const commandBus = mock<CommandBus>()
-    const testCreator: SkillCreator = new TestSkillCreatorImpl(eventBus, commandBus)
+  let eventBus: EventBus
+  let commandBus: CommandBus
+  let skillCreator: SkillCreator
 
-    const skillExecuter = testCreator.create()
+  beforeEach(() => {
+    eventBus = mock<EventBus>()
+    commandBus = mock<CommandBus>()
+    skillCreator = new TestSkillCreatorImpl(eventBus, commandBus)
+  })
+
+  it('should create an instance of skill executer', () => {
+    const skillExecuter = skillCreator.create()
 
     expect(skillExecuter).toHaveProperty('execute')
   })
 
   it('should create an instance of skill executer and execute skill', async () => {
-    const eventBus = mock<EventBus>()
-    const commandBus = mock<CommandBus>()
-    const testCreator: SkillCreator = new TestSkillCreatorImpl(eventBus, commandBus)
     let executed = false
 
-    // tslint:disable-next-line: no-string-literal
-    testCreator['executeSkill'] = async (from: any, to: any): Promise<void> => {
+    skillCreator['executeSkill'] = async (from: any, to: any): Promise<void> => {
       executed = true
     }
-    const skillExecuter = testCreator.create()
+    const skillExecuter = skillCreator.create()
     await skillExecuter.execute(null, null)
 
     expect(executed).toStrictEqual(true)

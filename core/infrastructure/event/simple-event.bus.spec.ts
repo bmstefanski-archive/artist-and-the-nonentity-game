@@ -16,8 +16,13 @@ class TestEvent implements Event {
 }
 
 describe('SimpleEventBus', () => {
+  let eventBus: EventBus
+
+  beforeEach(() => {
+    eventBus = new SimpleEventBus()
+  })
+
   it('null/undefined events should not be passed to notify function', () => {
-    const eventBus: EventBus = new SimpleEventBus()
     let lastEvent
 
     eventBus.subscribe((event) => (lastEvent = event))
@@ -27,7 +32,6 @@ describe('SimpleEventBus', () => {
   })
 
   it('subscriber should not receive event if executed synchronously before subscription', () => {
-    const eventBus: EventBus = new SimpleEventBus()
     let lastEvent
 
     eventBus.publish(new TestEvent({ greetingMessage: 'Howdy!' }))
@@ -37,7 +41,6 @@ describe('SimpleEventBus', () => {
   })
 
   it('subscriber should receive event executed after subscription', () => {
-    const eventBus: EventBus = new SimpleEventBus()
     let lastEvent
 
     eventBus.subscribe((event) => (lastEvent = event))
@@ -47,7 +50,6 @@ describe('SimpleEventBus', () => {
   })
 
   it('subscriber should not receive events after getting unsubscribed', () => {
-    const eventBus: EventBus = new SimpleEventBus()
     let lastEvent
 
     const subscription = eventBus.subscribe((event) => (lastEvent = event))
@@ -59,7 +61,6 @@ describe('SimpleEventBus', () => {
   })
 
   it('registered event handler should react when event gets published', () => {
-    const eventBus: EventBus = new SimpleEventBus()
     const handlerInstance = new TestEventHandler()
     let executed = false
 
@@ -73,7 +74,6 @@ describe('SimpleEventBus', () => {
   })
 
   it('event should be able to notify multiple handlers when gets published', () => {
-    const eventBus: EventBus = new SimpleEventBus()
     const firstHandlerInstance = new TestEventHandler()
     const secondHandlerInstance = new AnotherTestEventHandler()
     const executedHandlers = []
@@ -91,7 +91,6 @@ describe('SimpleEventBus', () => {
   })
 
   it('event bus should be able to register only event, without handlers', () => {
-    const eventBus = new SimpleEventBus()
     let lastEvent
 
     eventBus.registerAll({ event: TestEvent })

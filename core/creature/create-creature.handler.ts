@@ -11,12 +11,8 @@ export class CreateCreatureHandler implements CommandHandler<CreateCreatureComma
 
   public async execute(command: CreateCreatureCommand): Promise<void> {
     if (this.isDtoValid(command.dto)) {
-      const storedCreature: CreatureDto = this.storage.save({
-        health: 1,
-        strength: 2.5,
-        lives: 1,
-        ...command.dto,
-      }) as CreatureDto
+      const defaultValues = { health: 1, strength: 2.5, lives: 1 }
+      const storedCreature: CreatureDto = this.storage.save({ ...defaultValues, ...command.dto }) as CreatureDto
       this.eventBus.publish(new CreatureCreatedEvent(storedCreature))
     }
   }

@@ -7,20 +7,19 @@ import { SkillType } from './skill.type'
 
 describe('SkillFactory', () => {
   describe('makeSkill', () => {
-    it('should return new skill executer instance', () => {
-      const eventBus = mock<EventBus>()
-      const commandBus = mock<CommandBus>()
+    let skillFactory: SkillFactory
 
-      const skillExecuter = new SkillFactory(eventBus, commandBus).makeSkill(SkillType.THROWING_RHYME)
+    beforeEach(() => {
+      skillFactory = new SkillFactory(mock<EventBus>(), mock<CommandBus>())
+    })
+
+    it('should return new skill executer instance', () => {
+      const skillExecuter = skillFactory.makeSkill(SkillType.THROWING_RHYME)
 
       expect(skillExecuter).toHaveProperty('execute')
     })
 
     it('should throw SkillNotFoundError when passed skillType does not exist', () => {
-      const eventBus = mock<EventBus>()
-      const commandBus = mock<CommandBus>()
-
-      const skillFactory = new SkillFactory(eventBus, commandBus)
       expect(() => skillFactory.makeSkill('UNKNOWN_SKILL')).toThrow(SkillNotFoundError)
     })
   })
