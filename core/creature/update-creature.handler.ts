@@ -19,7 +19,7 @@ export class UpdateCreatureHandler implements CommandHandler<UpdateCreatureComma
     const changedProperties = this.differentiateChangedProperties(payloadToSave, dto)
 
     this.dataStorage.save(payloadToSave)
-    this.eventBus.publish(new CreatureUpdatedEvent(changedProperties))
+    this.eventBus.publish(new CreatureUpdatedEvent(id, changedProperties))
   }
 
   private async findOrThrow(id: number): Promise<CreatureDto> {
