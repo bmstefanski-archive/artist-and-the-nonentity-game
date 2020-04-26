@@ -4,7 +4,7 @@ import { UpdateCreatureCommand } from 'creature/update-creature.command'
 import { Event } from 'infrastructure/event/event.marker'
 import { Subscription } from 'infrastructure/event/subscription.type'
 import { floor } from 'lodash'
-import { SkillCreator } from './skill-creator'
+import { SkillCreator } from './skill.creator'
 
 export class ThrowRhymeSkillCreator extends SkillCreator {
   private static readonly SKILL_DURATION_SEC = 1000 * 10

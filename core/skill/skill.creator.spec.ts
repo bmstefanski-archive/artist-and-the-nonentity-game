@@ -1,7 +1,7 @@
 import { mock } from 'jest-mock-extended'
 import { CommandBus } from '../infrastructure/command/command.bus'
 import { EventBus } from '../infrastructure/event/event.bus'
-import { SkillCreator } from './skill-creator'
+import { SkillCreator } from './skill.creator'
 
 class TestSkillCreatorImpl extends SkillCreator {
   protected async executeSkill(from: any, to: any): Promise<void> {}

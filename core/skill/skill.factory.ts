@@ -1,6 +1,6 @@
 import { CommandBus } from 'infrastructure/command/command.bus'
 import { EventBus } from 'infrastructure/event/event.bus'
-import { SkillCreator } from './skill-creator'
+import { SkillCreator } from './skill.creator'
 import { SkillNotFoundError } from './skill-not-found.error'
 import { SkillExecuter } from './skill.executer'
 import { SkillType } from './skill.type'
