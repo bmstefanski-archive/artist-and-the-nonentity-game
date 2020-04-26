@@ -1,5 +1,4 @@
 import { CreatureUpdatedEvent } from 'creature/creature-updated.event'
-import { Creature } from 'creature/creature.model'
 import { CreatureDto } from 'creature/dto/creature.dto'
 import { UpdateCreatureCommand } from 'creature/update-creature.command'
 import { Event } from 'infrastructure/event/event.marker'
@@ -18,7 +17,7 @@ export class ThrowRhymeSkillCreator extends SkillCreator {
     }
   }
 
-  private isAlive(creature: Creature): boolean {
+  private isAlive(creature: CreatureDto): boolean {
     return creature && (creature.health > 0 || creature.lives > 0)
   }
 
